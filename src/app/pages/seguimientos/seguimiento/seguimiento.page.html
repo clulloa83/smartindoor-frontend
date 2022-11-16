@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Seguimiento</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="seguimientos" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="form" (ngSubmit)="guardarSeguimiento()">
+
+    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button (click)="cancel()">Cancelar</ion-button>
+            </ion-buttons>
+            <ion-title class="ion-text-center">Agregar Fotos</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <app-webcam-snapshot (fotosCargar)="captures=$event" (videoParam)="video=$event"></app-webcam-snapshot>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Observación</ion-label>
+      <ion-textarea rows="6" cols="20" formControlName="observacion" clearOnEdit="true" placeholder="Ingrese cualquier nota aquí..."></ion-textarea>
+    </ion-item>
+    
+    <ion-item lines="full">
+      <ion-label position="floating">Fecha</ion-label>
+      <ion-datetime locale="es-ES" formControlName="fecha" presentation="date" [firstDayOfWeek]="1"></ion-datetime>
+    </ion-item>
+    
+    <ion-row>
+      <ion-col>
+        <ion-button id="open-modal" expand="block" fill="outline">Agregar Fotos</ion-button>
+        <ion-button type="submit" color="primary" expand="block" [disabled]="!form.valid">Guardar</ion-button>
+      </ion-col>
+    </ion-row>
+
+<!-- 
+    <ion-item>
+      <ion-label> {{ form.value | json }}<br /> </ion-label>
+    </ion-item> -->
+
+  </form>
+
+</ion-content>

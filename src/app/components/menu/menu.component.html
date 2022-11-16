@@ -1,0 +1,28 @@
+<ion-menu side="start" menuId="primerMenu" contentId="principal" id="primerMenu">
+
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content color="light">  
+    <ion-list >  
+      
+      <ion-menu-toggle *ngFor="let menu of menus;" auto-hide="false">
+        <ion-item [routerLink]="menu.url" routerDirection="root">  
+          <ion-icon [name]="menu.icon" slot="start"></ion-icon>  
+          <ion-label>{{menu.title}}</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item button (click)="logout()">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          <ion-label>Cerrar sesión</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+    </ion-list>  
+  </ion-content>  
+
+</ion-menu>

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Seguimientos</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="cultivos" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="agregarSeguimiento()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-searchbar placeholder="Buscar..." [(ngModel)]="filterTerm" animated type="text" inputmode="text" debounce="500"></ion-searchbar>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let seguimiento of seguimientos | filter:filterTerm; let i = index" reorder="true">
+      
+      <ion-item>
+        <ion-icon name="bookmark-outline" slot="start"></ion-icon>
+        <ion-label>
+          <p>{{ seguimiento.observacion }}</p>
+          <small>{{ formatearFecha(seguimiento.fecha) }}</small>
+        </ion-label>
+      </ion-item>
+  
+      <ion-item-options>
+        <ion-item-option (click)="editarSeguimiento(seguimiento)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(seguimiento.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-infinite-scroll  position="bottom" (ionInfinite)="loadMore($event)" threshold="30%">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando más datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

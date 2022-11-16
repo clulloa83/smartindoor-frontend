@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Cultivo</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="cultivos" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="guardarCultivo()">
+
+    <ion-item lines="full">
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" clearInput formControlName="nombre" placeholder="Ingresar nombre"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">banco</ion-label>
+      <ion-input type="text" clearInput formControlName="banco" placeholder="Ingresar banco"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">tipo</ion-label>
+      <ion-input type="text" clearInput formControlName="tipo" placeholder="Ingresar tipo"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">genotipo</ion-label>
+      <ion-input type="text" clearInput formControlName="genotipo" placeholder="Ingresar genotipo"></ion-input>
+    </ion-item>
+    
+    <ion-item lines="full">
+      <ion-label position="floating">unidad</ion-label>
+      <ion-input type="text" clearInput formControlName="unidad" placeholder="Ingresar unidad"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Fecha</ion-label>
+      <ion-datetime locale="es-ES" formControlName="fecha" presentation="date" [firstDayOfWeek]="1"></ion-datetime>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block" [disabled]="!form.valid">Guardar</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-item>
+      <ion-label> {{ form.value | json }}<br /> </ion-label>
+    </ion-item> -->
+
+  </form>
+
+</ion-content>

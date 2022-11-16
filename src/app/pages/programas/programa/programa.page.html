@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Programa</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="programas" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="guardarPrograma()">
+
+    <ion-item lines="full">
+      <ion-label position="fixed">Hora</ion-label>
+      <ion-datetime slot="end" formControlName="hora" presentation="time"></ion-datetime>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="fixed">Acción</ion-label>
+      <div *ngFor="let accion of acciones" class="radio">
+        <label>
+          <input type="radio" value="{{accion.id}}" formControlName="accion">{{ accion.id }}
+        </label>
+      </div>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="fixed">Repetir</ion-label>
+      <ion-label>{{ repetirDias }}</ion-label>
+      <ion-button id="open-modal" slot="end">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+      <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button (click)="cancel()">Cancelar</ion-button>
+              </ion-buttons>
+              <ion-title class="ion-text-center">Repetir</ion-title>
+                <ion-buttons slot="end">
+                <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ng-container formArrayName="dias">
+              <ion-item *ngFor="let dia of diasFormArray.controls; let i = index">
+                <ion-label>{{ dias[i].id }}</ion-label>
+                <ion-checkbox slot="start" [formControlName]="i"></ion-checkbox>
+              </ion-item>
+            </ng-container>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block" [disabled]="!form.valid">Guardar</ion-button>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-item>
+      <ion-label> {{ form.value.dias | json }}<br /> </ion-label>
+    </ion-item> -->
+  </form>
+</ion-content>

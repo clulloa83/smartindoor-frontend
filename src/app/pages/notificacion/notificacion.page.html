@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Notificaciones</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="primerMenu" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-item>
+    <ion-button color="primary" *ngIf="isEnabled && !isGranted" (click)="suscribir()">Suscribir notificaciones</ion-button>
+    <ion-button color="danger" *ngIf="isEnabled && isGranted" (click)="dessuscribir()">DesSuscribir notificaciones</ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-label class="ion-text-wrap" color="primary" *ngIf="isGranted">Las notificaciones fueron concedidas por el usuario.</ion-label>
+    <br>
+    <ion-label class="ion-text-wrap" color="danger" *ngIf="!isEnabled">Las notificaciones no están disponibles en el navegador o habilitadas en la aplicación</ion-label>
+  </ion-item>
+
+</ion-content>

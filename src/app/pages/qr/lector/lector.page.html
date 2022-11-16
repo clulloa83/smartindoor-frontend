@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Lector QR</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="primerMenu" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<div class="scanner-shell" [hidden]="!hasDevices">
+  
+	  <header>
+  
+		<ion-list>
+		
+		  <ion-item>
+			<ion-label>Camaras</ion-label>
+			<ion-select interface="popover" placeholder="Select One" 
+			(ionChange)="onDeviceSelectChange($any($event.target).value)">
+			  <ion-select-option *ngFor="let device of availableDevices" [value]="device.deviceId" >
+				{{ device.label }}
+			  </ion-select-option>            
+			</ion-select>
+		  </ion-item>
+		</ion-list>      
+  
+	  </header>
+  
+	  <zxing-scanner [torch]="torchEnabled" [(device)]="currentDevice" (scanSuccess)="onCodeResult($event)"
+	  [formats]="formatsEnabled" [tryHarder]="tryHarder" (permissionResponse)="onHasPermission($event)"
+	  (camerasFound)="onCamerasFound($event)" (torchCompatible)="onTorchCompatible($event)"></zxing-scanner>
+  
+  
+	  <section class="results" *ngIf="qrResultString">
+		<div>
+		  <small>Result</small>
+		  <strong>{{ qrResultString }}</strong>
+		</div>
+		<ion-button expand="full" (click)="clearResult()">&times;</ion-button>
+	  </section>
+  
+	</div>
+  
+	<ng-container *ngIf="hasPermission === undefined">
+  
+	  <h2>Waiting for permissions.</h2>
+	
+	  <blockquote>
+		If your device does not has cameras, no permissions will be asked.
+	  </blockquote>
+	
+	</ng-container>
+	
+	<ng-container *ngIf="hasPermission === false">
+	
+	  <h2>You denied the camera permission, we can't scan anything without it. 😪</h2>
+	
+	</ng-container>
+	
+	<ng-container *ngIf="hasDevices === undefined">
+	
+	  <h2>Couldn't check for devices.</h2>
+	
+	  <blockquote>
+		This may be caused by some security error.
+	  </blockquote>
+	
+	</ng-container>
+	
+	<ng-container *ngIf="hasDevices === false">
+	
+	  <h2>No devices were found.</h2>
+	
+	  <blockquote>
+		I believe your device has no media devices attached to.
+	  </blockquote>
+	
+	</ng-container> 
+  
+</ion-content>

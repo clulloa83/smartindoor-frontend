@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Temperaturas</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dispositivos" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-button expand="block" (click)="obtenerRegistros()">obtenerRegistros</ion-button>
+
+  <ngx-gauge [type]="gaugeType" 
+            [value]="gaugeValue" 
+            [label]="gaugeLabel"  
+            [append]="gaugeAppendText"
+            [max]="gaugemax"
+            [thresholds]="gaugethresholds">
+  </ngx-gauge>
+
+</ion-content>

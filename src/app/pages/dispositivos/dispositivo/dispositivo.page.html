@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Dispositivo</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dispositivos" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="guardarDispositivo()">
+
+    <ion-item lines="full">
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" clearInput formControlName="nombre" placeholder="Ingresar nombre"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Icono</ion-label>
+      <ion-input type="text" clearInput formControlName="icon" placeholder="Ingresar icono"></ion-input>
+    </ion-item>
+    
+    <ion-item lines="full">
+      <ion-label position="floating">Ubicación</ion-label>
+      <ion-input type="text" clearInput formControlName="ubicacion" placeholder="Ingresar ubicación"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="fixed">Categoria</ion-label>
+      <div *ngFor="let categoria of categorias" class="radio">
+        <label>
+          <input type="radio" value="{{categoria.id}}" formControlName="categoria">{{ categoria.id }}
+        </label>
+      </div>
+    </ion-item>
+    
+    <ion-item lines="full">
+      <ion-label position="fixed">Tipo</ion-label>
+      <ion-label formArrayName="tipos" *ngFor="let tipo of tiposFormArray.controls; let i = index">
+        <input type="checkbox" [formControlName]="i">
+        {{tipos[i].id}}
+      </ion-label>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="danger" color="primary" expand="block" [disabled]="!form.valid">Guardar</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-item>
+      <ion-label> {{ form.value | json }}<br /> </ion-label>
+    </ion-item> -->
+
+  </form>
+</ion-content>

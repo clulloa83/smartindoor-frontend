@@ -1,0 +1,51 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/data/**",
+          "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-call",
+      "urls": [
+        "http://localhost:8080/api/menu",
+        "http://localhost:8080/api/dispositivo",
+        "http://localhost:8080/api/registro",
+        "http://localhost:8080/api/cultivo",
+        "http://localhost:8080/api/notificacion",
+        "http://localhost:8080/api/programa",
+        "http://localhost:8080/api/seguimiento"
+      ],
+      "cacheConfig": {
+        "maxAge": "15d",
+        "maxSize": 10,
+        "strategy": "freshness",
+        "timeout": "120s"
+      }
+    }
+  ]
+}

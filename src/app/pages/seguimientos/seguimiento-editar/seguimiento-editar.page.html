@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Seguimiento Editar</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="seguimientos" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="form" (ngSubmit)="guardarSeguimiento()">
+
+    <ion-item lines="full">
+      <ion-label position="floating">Observación</ion-label>
+      <ion-textarea rows="6" cols="20" formControlName="observacion" clearOnEdit="true" placeholder="Ingrese cualquier nota aquí..."></ion-textarea>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Fecha</ion-label>
+      <ion-datetime locale="es-ES" formControlName="fecha" presentation="date" [firstDayOfWeek]="1"></ion-datetime>
+    </ion-item>
+    
+    <ion-label position="floating">Capturas</ion-label>
+    <ion-item *ngFor="let captura of capturas">
+      <ion-thumbnail slot="start">
+        <img [src]="captura" />
+      </ion-thumbnail>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block" [disabled]="!form.valid">Guardar</ion-button>
+      </ion-col>
+    </ion-row>
+<!-- 
+    <ion-item>
+      <ion-label> {{ form.value | json }}<br /> </ion-label>
+    </ion-item> -->
+
+  </form>
+
+</ion-content>

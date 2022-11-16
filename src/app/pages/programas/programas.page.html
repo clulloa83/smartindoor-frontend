@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Programas</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dispositivos" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="agregarPrograma()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let programa of programas; let i = index" reorder="true">
+      
+      <!-- <ion-card> -->
+
+      <ion-item>
+        <ion-icon name="time-outline" slot="start"></ion-icon>
+        <ion-label>
+          <h1>{{ programa.hora }}</h1>
+          <h6>{{ programa.accion }}</h6>
+          <small *ngIf="programa.dias.length > 0">{{ programa.dias }}</small>
+          <small *ngIf="programa.dias.length < 1">una vez</small>
+        </ion-label>
+        <ion-toggle [checked]="programa.activo" slot="end" name="activoToggle" (ionChange)="actualizarPrograma($event, programa.id)"></ion-toggle>
+      </ion-item>
+  
+      <ion-item-options>
+        <ion-item-option (click)="editarPrograma(programa)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(programa.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+    <!-- </ion-card> -->
+
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-infinite-scroll  position="bottom" (ionInfinite)="loadMore($event)" threshold="30%">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando más datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

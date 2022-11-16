@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Gráficos</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dispositivos" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-button expand="block" (click)="generarGrafico()">obtenerRegistros</ion-button>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        Select Chart type
+      </ion-label>
+    </ion-list-header>
+  
+    <ion-item class="ion-padding-horizontal" lines="none">
+      <ion-label> Charts </ion-label>
+      <ion-select value="line" okText="Create" cancelText="Cancel" mode="ios" (ionChange)="changeChart($event)" color="danger">
+        <ion-select-option value="line">Lines</ion-select-option>
+        <ion-select-option value="bar">Bar</ion-select-option>
+        <ion-select-option value="radar">Radar</ion-select-option>
+        <ion-select-option value="doughnut">Doughnut</ion-select-option>
+        <ion-select-option value="pie">Pie</ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+  </ion-list>  
+  <div class="bg-white cus-card">
+    <canvas #chartCanvas></canvas>
+  </div>
+</ion-content>

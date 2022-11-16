@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Dispositivos</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="primerMenu" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="agregarDispositivo()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let dispositivo of dispositivos; let i = index" reorder="true">
+      
+      <ion-item>
+
+          <ion-icon [name]="dispositivo.icon" slot="start"></ion-icon>
+          <ion-label>
+            <h1>{{ dispositivo.nombre }}</h1>
+            <br>
+            <small>Ubicación: {{ dispositivo.ubicacion }}</small>
+            <br>
+            <small>Categoria: {{ dispositivo.categoria }}</small>
+            <br>
+            <ion-chip outline color="primary" *ngFor="let tipo of dispositivo.tipos">
+              <ion-label>{{ tipo }}</ion-label>
+            </ion-chip>
+          </ion-label>
+          <ion-button fill="outline" slot="end" (click)="obtenerOpciones(dispositivo)">Ver</ion-button>
+
+      </ion-item>
+
+      <ion-item-options>
+        <ion-item-option (click)="editarDispositivo(dispositivo)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(dispositivo.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <ion-infinite-scroll  position="bottom" (ionInfinite)="loadMore($event)" threshold="30%">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando más datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- <div *ngFor="let item of dispositivos; let i = index">
+    <ion-card>
+
+      <ion-item>
+        <ion-icon [name]="item.icon" slot="start"></ion-icon>
+        <ion-label>{{ item.nombre }}</ion-label>
+        <ion-button fill="outline" slot="end" (click)="obtenerOpciones(item)">Ver</ion-button>
+      </ion-item>
+
+      <ion-card-content>
+        <p>Ubicación: {{ item.ubicacion }}</p>
+        <p>Categoria: {{ item.categoria }}</p>
+      </ion-card-content>
+
+      <ion-item>
+        <ion-chip outline color="primary" *ngFor="let t of item.tipo">
+          <ion-label>{{ t }}</ion-label>
+        </ion-chip>
+      </ion-item>
+    </ion-card>
+  </div>
+  -->
+
+</ion-content>
+
