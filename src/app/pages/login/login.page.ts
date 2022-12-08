@@ -54,13 +54,16 @@ export class LoginPage implements OnInit {
       
     } catch (err) {
 
+      // console.log('err.error.errors[0]', err.error.errors[0]);
+      const msgError = err.error.errors.length > 0 ? err.error.errors[0] : 'Se ha producido un error, favor intentar más tarde';
+
       await this.loaderService.dismissLoader();
 
       const alertOpt: Alert = new Alert();
       alertOpt.header = 'Error en Login';
       // alertOpt.message = err.error.errors[0];
-      alertOpt.message = 'Se ha producido un error, favor intentar más tarde';
-      
+      // alertOpt.message = 'Se ha producido un error, favor intentar más tarde';
+      alertOpt.message = msgError;
       alertOpt.buttons = ['OK'];
 
       await this.alertService.simpleAlert(alertOpt);

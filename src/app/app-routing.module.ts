@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './services/auth.guard';
+import { IntroGuard } from './services/intro.guard';
 
 const routes: Routes = [
   // { path: '**', redirectTo: '' },
   {
+    path: 'intro',
+    loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule)
+  },
+  {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),
+    canActivate:[IntroGuard,]
   },
   {
     path: '',
@@ -116,6 +122,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/temperatura-enlinea/temperatura-enlinea.module').then( m => m.TemperaturaEnlineaPageModule),
     canActivate: [ AuthGuard ]
   },
+
 
 ];
 
