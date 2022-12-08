@@ -52,10 +52,10 @@ export class MenuService {
 
     try {
 
-      this.menus = await this.storageService.get('menus');
-      if(this.menus){
-        return this.menus;
-      };
+      // this.menus = await this.storageService.get('menus');
+      // if(this.menus){
+      //   return this.menus;
+      // };
   
       const perfilAdmin: string = '624e2a9a78c2edcbb2e46114';
       const token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDk0NDgzOTV9.NgfBwi28AHXdEamdtHjyENHd9WXI6QOF4UnQDItsC4c';
@@ -80,9 +80,8 @@ export class MenuService {
         throw new Error(`error ${ error }`);
       });
   
-      await this.storageService.set('menus', this.menus);
-  
-      return this.menus;      
+      // await this.storageService.set('menus', this.menus);
+      return this.menus;   
       
     } catch (error) {
       console.log('menuPerfilAdminObtener2 error', error);
