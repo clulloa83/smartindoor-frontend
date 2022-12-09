@@ -1,10 +1,12 @@
 <ion-content>
   <form [formGroup]="form" (ngSubmit)="logear()">
     <div class="input-group">
-      <ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Correo</ion-label>
         <ion-input type="text" placeholder="Correo" formControlName="correo" required  autocomplete="off"></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Contraseña</ion-label>
         <ion-input [type]="passwordType" placeholder="Contraseña" formControlName="contraseña" required autocomplete="new-password"
           clearOnEdit="false"></ion-input>
         <ion-icon slot="end" [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
@@ -12,7 +14,7 @@
     </div>
     <ion-button type="submit" color="danger" expand="block" [disabled]="!form.valid">Iniciar sesión</ion-button>
     <!-- <a [routerLink]="['/forgot-password']" class="small-text">Forgot Password?</a> -->
-    <ion-button type="button" expand="block" color="light" fill="clear">Inscribirse!</ion-button>
+    <ion-button type="button" expand="block" color="light" fill="clear" [routerLink]="['/registro-usuario']">Inscribirse!</ion-button>
 
     <!-- <ion-button type="button" expand="block" color="tertiary">
       <ion-icon name="logo-google" slot="start"></ion-icon>

@@ -121,7 +121,11 @@ const routes: Routes = [
     path: 'temperatura-enlinea',
     loadChildren: () => import('./pages/temperatura-enlinea/temperatura-enlinea.module').then( m => m.TemperaturaEnlineaPageModule),
     canActivate: [ AuthGuard ]
+  },  {
+    path: 'registro-usuario',
+    loadChildren: () => import('./pages/registro-usuario/registro-usuario.module').then( m => m.RegistroUsuarioPageModule)
   },
+
 
 
 ];
