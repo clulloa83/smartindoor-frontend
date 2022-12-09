@@ -155,12 +155,11 @@ export class SeguimientoPage {
 
   porSincronizar = async(seguimiento: Seguimiento) => {
 
-    
       //Procedimiento para almacanear peticion de registro en indexedDB
-      const seguimientos: any[] = await this.seguimientoService.seguimientosObtenerStorage();
+      const seguimientos: Seguimiento[] = await this.seguimientoService.seguimientosSincronizadosObtener();
+      seguimiento.sincronizado = false;
       seguimientos.push(seguimiento);
       this.storageService.set('seguimientos',seguimientos);
-      this.storageService.set('seguimientos-sync',[]);
 
   }
 

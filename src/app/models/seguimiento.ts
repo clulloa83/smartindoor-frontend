@@ -7,6 +7,7 @@ export class Seguimiento {
     fecha: Date;
     estado: boolean;
     capturas?: any[];
+    sincronizado: boolean;
 
     constructor(){
         this.cultivo = new Cultivo();

@@ -156,13 +156,6 @@ export class SeguimientoService {
 
   };
 
-  seguimientosObtenerStorage = async() => {
-
-    const seguimientos = await this.storageService.get('seguimientos');
-    return seguimientos ? seguimientos : [];
-
-  };
-
   /**
  * registra tag o bandera indicativa de sincronizaciones de peticiones pendientes en idb
  */
@@ -185,7 +178,7 @@ export class SeguimientoService {
 
     try {
 
-      const seguimientosSync = await this.storageService.get('seguimientos-sync')
+      const seguimientosSync: Seguimiento[] = await this.storageService.get('seguimientos')
       .then(seguimientos => {
         return seguimientos ? seguimientos : [];
       });
@@ -198,5 +191,16 @@ export class SeguimientoService {
 
   };
 
+  agregarSeguimientosPorSincronizar = async(seguimientos: Seguimiento[]) => {
+    
+    try {
+
+      await this.storageService.set('seguimientos', seguimientos)
+      
+    } catch (error) {
+      console.log('error', error);
+
+    }
+  };
 
 }

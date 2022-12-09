@@ -15,9 +15,7 @@ self.addEventListener('sync', (event) => {
   {
     switch (event.tag) {
       case TAGS_SYNC[0]:
-        event.waitUntil(getDataAndSend());
-        break;
-      default:
+        event.waitUntil(syncSeguimientos());
         break;
     }
   }

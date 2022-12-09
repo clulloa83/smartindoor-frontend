@@ -36,7 +36,9 @@
               },
               "src/manifest.webmanifest",
               "src/service-worker.js",
-              "src/sw-seguimiento.js"
+              "src/sw-seguimiento.js",
+              "src/sw-url-api.js",
+              "src/sw-utilidades.js"
             ],
             "styles": [
               "./node_modules/leaflet/dist/leaflet.css",

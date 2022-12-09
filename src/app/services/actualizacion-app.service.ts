@@ -1,4 +1,5 @@
 import { Injectable, ApplicationRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { ToastController } from '@ionic/angular';
 // import { interval } from 'rxjs';
@@ -6,6 +7,9 @@ import { ToastController } from '@ionic/angular';
 import { concat, interval } from 'rxjs';
 import { first } from 'rxjs/operators'
 import { SeguimientoService } from './seguimiento.service';
+import { Seguimiento } from 'src/app/models/seguimiento';
+import { AlertService } from './alert.service';
+import { Alert } from 'src/app/models/alert';
 
 const intervalo = 30;
 const intervaloHoras = 8;
@@ -22,6 +26,9 @@ export class ActualizacionAppService {
     private appRef: ApplicationRef,
     private toastController: ToastController,
     private seguimientosService: SeguimientoService,
+    private router: Router,
+    private alertService: AlertService,
+
   ) { }
 
   /**
@@ -123,8 +130,15 @@ export class ActualizacionAppService {
       });
   
       addEventListener('online', e => {
-        this.displayToast('online', 'Tiene conexión');
-        this.verificarSincronizaciones();
+
+        setTimeout(() => {
+          
+          this.displayToast('online', 'Tiene conexión');
+          this.verificarSincronizaciones();
+
+        }, 2000);
+
+
       });
     };
 
@@ -181,14 +195,48 @@ export class ActualizacionAppService {
 
       try {
 
-        const seguimientos = await this.seguimientosService.seguimientosSincronizadosObtener();
-        if (seguimientos.length > 0){
-          this.displayToast('Sincronización Seguimientos', `Se ${ seguimientos.length > 1 ? 'han':'ha' } sincronizado ${ seguimientos.length } ${ seguimientos.length > 1 ? 'seguimientos':'seguimiento' }`);
-        }
+        const seguimientos: Seguimiento[] = await this.seguimientosService.seguimientosSincronizadosObtener();
+        const sincronizados = seguimientos.filter(o => o.sincronizado);
+        const Nosincronizados = seguimientos.filter(o => !o.sincronizado);
+        //   this.displayToast('Sincronización Seguimientos', `Se ${ seguimientos.length > 1 ? 'han':'ha' } sincronizado ${ seguimientos.length } ${ seguimientos.length > 1 ? 'seguimientos':'seguimiento' }`);
+
+        if(seguimientos.length > 0 && sincronizados.length > 0){
+
+          const alertOpt: Alert = new Alert();
+          alertOpt.header = 'Sincronización Seguimientos';
+          alertOpt.message = 'Se han sincronizado seguimientos';
+          alertOpt.buttons = [
+            {
+              text: 'OK',
+              role: 'confirm',
+              handler: async() => {
+                await this.seguimientosService.agregarSeguimientosPorSincronizar(Nosincronizados);
+                await this.reloadComponent();
+              }
+            }
+          ];
+          this.alertService.simpleAlert(alertOpt);          
+        
+        }        
         
       } catch (error) {
         console.log('error', error);
 
+      }
+    };
+
+    reloadComponent = () => {
+
+      try {
+        
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        const url = window.location.hash;
+        const newUrl = url.split('#/')[1];
+        this.router.navigate([`/${ newUrl }`]);
+  
+      } catch (error) {
+        console.log('error', error);
       }
     };
 }
